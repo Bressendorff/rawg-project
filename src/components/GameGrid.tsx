@@ -1,10 +1,11 @@
 import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import apiClient from "../services/api-client";
 
-// interface GameResponse {
-//   count: number;
-//   result: Game[];
-// }
+interface GameResponse {
+  count: number;
+  results: Game[];
+}
 
 interface Game {
   id: number;
@@ -16,26 +17,25 @@ const GameGrid = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(
-      "https://api.rawg.io/api/games?key=625cef27d6f940b78de251925cf11566",
-      {
-        method: "GET",
-      }
-    )
-      .then((response) => response.json())
-      .then((response) => setGames(response.results))
-      .catch((error) => setError("Error: " + error.message));
+    apiClient
+      .get<GameResponse>("games")
+      .then((res) => {
+        setGames(res.data.results);
+      })
+      .catch((error) => setError(error.message));
   });
 
   return (
-    <div>
+    <>
       {error && <Text>{error}</Text>}
-      <ul>
-        {games.map((game) => (
-          <li>{game.name}</li>
-        ))}
-      </ul>
-    </div>
+      {games && (
+        <ul>
+          {games.map((game) => (
+            <li>{game.name}</li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 
