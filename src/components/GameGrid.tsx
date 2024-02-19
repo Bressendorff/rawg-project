@@ -15,7 +15,7 @@ const GameGrid = () => {
           columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
         >
           {games.map((game) => (
-            <GameCard game={game} />
+            <GameCard key={game.id} game={game} />
           ))}
         </SimpleGrid>
       )}
