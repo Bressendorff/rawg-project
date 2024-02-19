@@ -7,8 +7,10 @@ import {
   FaApple,
   FaLinux,
   FaAndroid,
+  FaGlobe,
 } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
+import { IoIosPhonePortrait } from "react-icons/io";
 import { IconType } from "react-icons";
 
 interface Props {
@@ -16,14 +18,9 @@ interface Props {
 }
 
 const PlatformIconsList = ({ platforms }: Props) => {
-  //   const getIcon = (icon_slug: string) => {
-  //     switch (icon_slug) {
-  //       case "pc":
-  //         return FaWindows;
-  //       case "linux":
-  //         return FaLinux;
-  //     }
-  //   };
+  const getIcon = (slug: string) => {
+    return iconMap[slug] ?? FaGlobe;
+  };
 
   const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
@@ -33,12 +30,13 @@ const PlatformIconsList = ({ platforms }: Props) => {
     xbox: FaXbox,
     android: FaAndroid,
     nintendo: BsNintendoSwitch,
+    ios: IoIosPhonePortrait,
   };
 
   return (
     <HStack marginRight={1}>
       {platforms.map((p) => (
-        <Icon key={p.id} as={iconMap[p.slug]} />
+        <Icon key={p.id} as={getIcon(p.slug)} />
       ))}
     </HStack>
   );
