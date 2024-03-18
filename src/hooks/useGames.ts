@@ -17,7 +17,9 @@ import { Platform } from "./usePlatforms";
             params: {
               genres: gameQuery?.genre?.id,
               parent_platforms: gameQuery?.platform?.id,
-              ordering: gameQuery?.sortOrder} },
+              ordering: gameQuery?.sortOrder,
+            search: gameQuery?.searchText,
+          search_exact: true} },
           [gameQuery]);
   }
 
